@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Plone 5 and machine learning</title>
+
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Ramon Navarro Bosch">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Plone 5 & ML</h1>
+                    <h3>The most powerful python open source CMS</h3>
+                    <p>
+                        <small>Created by <a href="http://iskra.cat">Ramon Navarro Bosch</a> / <a href="http://twitter.com/bloodbare">@bloodbare</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Ramon Navarro Bosch</h2>
+                    <ul>
+                        <li>Plone Foundation Member</li>
+                        <li>Plone Framework Team</li>
+                        <li>CTO at Iskra.cat</li>
+                        <li class="fragment">Catalan</li>
+                    </ul>
+                    <aside class="notes">
+                        11 years Web Python Developer
+                    </aside>
+
+                </section>
+
+                <section>
+                    <h2>The talk</h2>
+                    <ul>
+                        <li><h3>Plone 5</h3></li>
+                        <li class="fragment">Machine Learning</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Plone 5</h2>
+                    <ul>
+                        <li>Quality</li>
+                        <li>Tests</li>
+                        <li>Protect investment in current sites</li>
+                        <li>Usability for real people</li>
+                        <li>Stability</li>
+                        <li>Scale from S to XL</li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Who does not know Plone?</h2>
+                        <p>From the user point of view</p>
+                    </section>
+                    <section data-background="imatges/content.png">
+                        <h2 style="padding-top: 10px; padding-bottom: 10px; border-radius: 5em; background-color: rgba(240,240,240,0.9);">Content</h2>
+                        <p style="padding: 10px; border-radius: 5em; background-color: rgba(220,220,220,0.8);">Content is the king (Dexterity)</p>
+                        <p class="fragment" style="padding: 10px; border-radius: 5em; background-color: rgba(220,220,220,0.8);">With full multilingual</p>
+                    </section>
+                    <section data-background="imatges/sand.png">
+                        <h2 style="padding-top: 10px; padding-bottom: 10px; border-radius: 5em; background-color: rgba(240,240,240,0.9);">Granular Security</h2>
+                        <ul style="padding: 50px; border-radius: 5em; background-color: rgba(220,220,220,0.8); list-style-type: none; text-align: center; ">
+                            <li>Zope/ZODB</li>
+                            <li>Workflow</li>
+                        </ul>
+                    </section>
+                    <section data-background="imatges/color.jpeg">
+                        <h2  style="padding-top: 10px; padding-bottom: 10px; border-radius: 5em; background-color: rgba(240,240,240,0.9);">Theming</h2>
+                        <ul style="padding: 50px; border-radius: 5em; background-color: rgba(220,220,220,0.8); list-style-type: none; text-align: center; ">
+                            <li>RequireJS/LESS</li>
+                            <li>XSLT/DIAZO</li>
+                        </ul>
+                    </section>
+                    <section data-background="imatges/mosaic.gif" data-background-size="600px">
+                        <h2 style="padding-top: 10px; padding-bottom: 10px; border-radius: 5em; background-color: rgba(240,240,240,0.9);">Inline edition / TTW</h2>
+                        <aside class="notes">
+                            TTW content edition / content types creation / workflows / theme editing
+                        </aside>
+                    </section>
+                    <section>
+                        <h2><a href="http://localhost:8080/Plone" target="_blank">Try!</a></h2>
+                    </section>
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Who does not know Plone</h2>
+                        <p>From the tech point of view</p>
+                    </section>
+                    <section data-background="imatges/hierarchy.png">
+                        <h2 style="padding: 10px; border-radius: 5em; background-color: rgba(240,240,240,0.8);">Hierarchy</h2>
+                        <p class="fragment"><img src="imatges/folder.png"/></p>
+                        <aside class="notes">
+                            ZODB now in Python 3
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Dexterity</h2>
+                        <pre><code>
+from plone.app.textfield import RichText
+from plone.autoform import directives
+from plone.namedfile import field as namedfile
+from plone.supermodel.directives import fieldset
+from plone.supermodel import model
+from z3c.form.browser.radio import RadioFieldWidget
+from zope import schema
+from zope.schema.vocabulary import SimpleVocabulary
+from zope.schema.vocabulary import SimpleTerm
+
+from ploneconf.site import MessageFactory as _
+
+
+LevelVocabulary = SimpleVocabulary(
+    [SimpleTerm(value=u'platinum', title=_(u'Platinum Sponsor')),
+     SimpleTerm(value=u'gold', title=_(u'Gold Sponsor')),
+     SimpleTerm(value=u'silver', title=_(u'Silver Sponsor')),
+     SimpleTerm(value=u'bronze', title=_(u'Bronze Sponsor'))]
+    )
+
+
+class ISponsor(model.Schema):
+    """Dexterity-Schema for Sponsors
+    """
+
+    directives.widget(level=RadioFieldWidget)
+    level = schema.Choice(
+        title=_(u"Sponsoring Level"),
+        vocabulary=LevelVocabulary,
+        required=True
+    )
+
+    text = RichText(
+        title=_(u"Text"),
+        required=False
+    )
+
+    url = schema.URI(
+        title=_(u"Link"),
+        required=False
+    )
+
+    fieldset('Images', fields=['logo', 'advertisment'])
+    logo = namedfile.NamedBlobImage(
+        title=_(u"Logo"),
+        required=False,
+    )
+
+    advertisment = namedfile.NamedBlobImage(
+        title=_(u"Advertisment (Gold-sponsors and above)"),
+        required=False,
+    )
+
+    directives.read_permission(notes="cmf.ManagePortal")
+    directives.write_permission(notes="cmf.ManagePortal")
+    notes = RichText(
+        title=_(u"Secret Notes (only for site-admins)"),
+        required=False
+    )
+    
+
+                        </code></pre>
+                        <aside class="notes">
+                            TTW and on XML
+                        </aside>
+                    </section>
+                    <section>
+                        <h2>Traversal</h2>
+
+                        <pre><code>
+http://yoursite.cat/folder-i-created/my-document/my_view
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Views</h2>
+                        <pre><code>
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
+from Products.CMFPlone.resources import add_resource_on_request
+
+
+class TalkListView(BrowserView):
+    """ A list of talks
+    """
+
+    def __call__(self):
+        add_resource_on_request(self.request, 'jquery.datatables')
+        return super(TalkListView, self).__call__()
+
+    def talks(self):
+        results = []
+        portal_catalog = getToolByName(self.context, 'portal_catalog')
+        current_path = "/".join(self.context.getPhysicalPath())
+
+        brains = portal_catalog(portal_type="talk",
+                                path=current_path)
+        for brain in brains:
+            results.append({
+                'title': brain.Title,
+                'description': brain.Description,
+                'url': brain.getURL(),
+                'audience': ', '.join(brain.audience or []),
+                'type_of_talk': brain.type_of_talk,
+                'speaker': brain.speaker,
+                'uuid': brain.UID,
+                })
+        return results
+                        </code></pre>
+                        <aside class="notes">
+                            Also will get the css/js
+                        </aside>
+
+                    </section>
+                    <section>
+                        <h2>Views II</h2>
+                        <pre><code>
+    &lt;browser:page
+       name="talklistview"
+       for="*"
+       layer="..interfaces.IPloneconfSiteLayer"
+       class=".views.TalkListView"
+       template="templates/talklistview.pt"
+       permission="zope2.View"
+       /&gt;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Views III</h2>
+                        <pre><code>
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="ploneconf.site"&gt;
+&lt;body&gt;
+
+&lt;metal:head fill-slot="javascript_head_slot"&gt;
+    &lt;script type="text/javascript"&gt;
+        $(document).ready(function(){
+            var oTable = $('#talks').dataTable({
+            });
+        })
+    &lt;/script&gt;
+&lt;/metal:head&gt;
+
+&lt;metal:content-core fill-slot="content-core"&gt;
+
+    &lt;table class="listing" id="talks"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;
+                    Title
+                &lt;/th&gt;
+                &lt;th&gt;
+                    Speaker
+                &lt;/th&gt;
+                &lt;th&gt;
+                    Audience
+                &lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr tal:repeat="talk view/talks"&gt;
+                &lt;td&gt;
+                    &lt;a href="${talk/url}" title="${talk/description}"&gt;
+                       ${talk/title}
+                    &lt;/a&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    ${talk/speaker}
+                &lt;/td&gt;
+                &lt;td&gt;
+                    ${talk/audience}
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr tal:condition="not:view/talks"&gt;
+                &lt;td colspan=3&gt;
+                    No talks so far :-(
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+
+&lt;/metal:content-core&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Pythonic</h2>
+                        <pre><code>site.folder.document.attribute</code></pre>
+                    </section>
+                    <section>
+                        <h2>Zope Component Architecture</h2>
+                    </section>
+                    <section>
+                        <h2>Storage of components</h2>
+                        <ul>
+                            <li>global registry</li>
+                            <li>local registry</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Adapter</h2>
+                        <pre><code>
+
+class IPerson(Interface):
+
+    def whichTShirtIMWearing(self):
+        pass
+
+class CatalanGuy(object):
+    
+    implements(IPerson)
+    
+    def whichTShirtIMWearing(self):
+        return "estelada"
+
+class BaskGuy(object):
+
+    implements(IPerson)
+
+    def whichTShirtIMWearing(self):
+        return "T-Shirt?"
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>Subscriber</h2>
+                        <pre><code>
+&lt;subscriber
+  for="object.IKindOfObject
+       zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+  handler="function"
+  /&gt;
+
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>Utility</h2>
+                        <pre><code>
+&lt;utility
+  for=".interfaces.IGoodAlcohol"
+  handler=".object.GoodAlcohol"
+  /&gt;
+
+                        </code></pre>
+
+                    </section>
+                    <section>
+                        <h2>JS/CSS</h2>
+                        <ul>
+                            <li>Mockup/Patterns
+                            <pre><code>
+&lt;input class="pat-pickadate" type="text" 
+       name="form.widgets.IDublinCore.effective" 
+       value="" 
+       data-pat-pickadate="{
+            'date': {
+                'format': 'mmmm d, yyyy', 
+                'max': [2035, 1, 1],
+                'min': [1915, 1, 1],
+                'firstDay': 0, 
+                'selectYears': 200, 
+                'placeholder': 'Posa una data',
+                'today': 'Avui'}, 
+            'time': {
+                'placeholder': 'Tria l\'hora',
+                'today': 'Avui', 
+                'format': 'h:i a'}}" &gt;
+                            </code></pre>
+                            </li>
+                            <li>RequireJS/LESS</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Diazo</h2>
+                        <pre><code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;rules
+    xmlns="http://namespaces.plone.org/diazo"
+    xmlns:css="http://namespaces.plone.org/diazo/css"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+
+    &lt;theme href="/++theme++abb.basictheme/index.html" css:if-not-content=".userrole-anonymous"/&gt;
+    &lt;theme href="/++theme++abb.basictheme/index-anon.html" css:if-content=".userrole-anonymous"/&gt;
+    &lt;notheme css:if-not-content="#visual-portal-wrapper" /&gt;
+
+  &lt;rules if-content="//*[@id='portal-top']"&gt;
+    &lt;!-- Attributes --&gt;
+    &lt;copy attributes="*" theme="/html" content="/html"/&gt;
+    &lt;!-- Base tag --&gt;
+    &lt;before theme="/html/head/title" content="/html/head/base"/&gt;
+    &lt;!-- Title --&gt;
+    &lt;replace theme="/html/head/title" content="/html/head/title" /&gt;
+    &lt;!-- Pull in Plone Meta --&gt;
+    &lt;after theme-children="/html/head" content="/html/head/meta" /&gt;
+    &lt;!-- dont use Plone icons, use the theme --&gt;
+    &lt;drop css:content="head link[rel='apple-touch-icon']" /&gt;
+    &lt;drop css:content="head link[rel='shortcut icon']" /&gt;
+    &lt;!-- Script --&gt;
+    &lt;after theme-children="/html/head" content="/html/head/script" /&gt;
+    &lt;!-- CSS --&gt;
+    &lt;after theme-children="/html/head" content="/html/head/link" /&gt;
+  &lt;/rules&gt;
+
+  &lt;!-- Copy over the id/class attributes on the body tag.
+       This is important for per-section styling --&gt;
+  &lt;copy attributes="*" css:content="body" css:theme="body" /&gt;
+
+  &lt;!-- move global nav --&gt;
+  &lt;replace css:theme-children="#mainnavigation" css:content-children="#portal-mainnavigation" method="raw" /&gt;
+
+  &lt;!-- hero unit on homepage only --&gt;
+  &lt;drop css:if-not-content="body.template-document_view.section-front-page"
+        css:theme="div.principal" /&gt;
+
+  &lt;!-- full-width breadcrumb --&gt;
+  &lt;replace css:theme="#above-content" css:content="#viewlet-above-content" css:if-not-content=".userrole-anonymous"/&gt;
+
+  &lt;!-- Central column --&gt;
+  &lt;replace css:theme="#content-container" method="raw"&gt;
+
+      &lt;xsl:variable name="central"&gt;
+        &lt;xsl:if test="//aside[@id='portal-column-one'] and //aside[@id='portal-column-two']"&gt;col-xs-12 col-sm-6&lt;/xsl:if&gt;
+        &lt;xsl:if test="//aside[@id='portal-column-two'] and not(//aside[@id='portal-column-one'])"&gt;col-xs-12 col-sm-9&lt;/xsl:if&gt;
+        &lt;xsl:if test="//aside[@id='portal-column-one'] and not(//aside[@id='portal-column-two'])"&gt;col-xs-12 col-sm-9&lt;/xsl:if&gt;
+        &lt;xsl:if test="not(//aside[@id='portal-column-one']) and not(//aside[@id='portal-column-two'])"&gt;col-xs-12 col-sm-12&lt;/xsl:if&gt;
+      &lt;/xsl:variable&gt;
+
+      &lt;div class="{$central}"&gt;
+&lt;!--           &lt;p class="pull-right visible-xs"&gt;
+            &lt;button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas"&gt;Toggle nav&lt;/button&gt;
+          &lt;/p&gt; --&gt;
+          &lt;div class="row"&gt;
+            &lt;div class="col-xs-12 col-sm-12"&gt;
+               &lt;xsl:apply-templates css:select="#content"/&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;footer class="row"&gt;
+            &lt;div class="col-xs-12 col-sm-12"&gt;
+             &lt;xsl:copy-of select="//div[@id='viewlet-below-content']"/&gt;
+            &lt;/div&gt;
+          &lt;/footer&gt;
+      &lt;/div&gt;&lt;!--/row--&gt;
+  &lt;/replace&gt;
+
+  &lt;!-- Alert message --&gt;
+  &lt;replace css:theme-children="#global_statusmessage" css:content-children="#global_statusmessage" /&gt;
+
+  &lt;!-- Left column --&gt;
+  &lt;rules if-content="//*[@id='portal-column-one']"&gt;
+    &lt;replace css:theme="#column1-container"&gt;
+        &lt;div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar"&gt;
+          &lt;aside id="portal-column-one"&gt;
+             &lt;xsl:copy-of select="//*[@id='portal-column-one']/*"/&gt;
+          &lt;/aside&gt;
+        &lt;/div&gt;
+    &lt;/replace&gt;
+  &lt;/rules&gt;
+
+  &lt;!-- Right column --&gt;
+  &lt;rules if-content="//*[@id='portal-column-two']"&gt;
+    &lt;replace css:theme="#column2-container"&gt;
+        &lt;div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="complementary"&gt;
+          &lt;aside id="portal-column-two"&gt;
+             &lt;xsl:copy-of select="//*[@id='portal-column-two']/*"/&gt;
+          &lt;/aside&gt;
+        &lt;/div&gt;
+    &lt;/replace&gt;
+  &lt;/rules&gt;
+
+  &lt;!-- Content header --&gt;
+  &lt;replace css:theme="#portal-top" css:content-children="#portal-top" /&gt;
+
+  &lt;replace css:theme-children="#portal-footer" css:content-children="#portal-footer-wrapper" /&gt;
+
+
+        &lt;!-- contingut --&gt;
+&lt;!--         &lt;replace css:content-children="#portal-column-content" css:theme-children=".zona_central" css:if-not-content=".template-facetednavigation_view"/&gt;
+
+        &lt;replace css:content-children="#content-core" css:theme-children=".content" css:if-content=".template-facetednavigation_view"/&gt;
+        &lt;replace css:content-children="#left-area" css:theme-children=".filters" css:if-content=".template-facetednavigation_view"/&gt;
+        &lt;replace css:content-children="#left-area" css:theme-children=".filters" css:if-content=".template-facetednavigation_view"/&gt;
+ --&gt;        &lt;!-- &lt;drop css:content-children="#faceted-left-column" css:if-content=".template-facetednavigation_view"/&gt; --&gt;
+
+        &lt;replace css:content-children="#mainmenu" css:theme-children="#mainmenu" css:if-content=".userrole-authenticated"/&gt;
+        &lt;replace css:content="#viewlet-all-sites" css:theme="#all-sites" css:if-content=".userrole-authenticated"/&gt;
+
+      &lt;!-- toolbar --&gt;
+      &lt;replace css:theme="#portal-toolbar" css:content-children="#edit-bar" css:if-not-content=".ajax_load" css:if-content=".userrole-authenticated"/&gt;
+      &lt;drop css:content="#portal-anontools" css:if-content=".userrole-anonymous"/&gt;
+      &lt;drop css:content="#portal-searchbox"/&gt;
+
+&lt;/rules&gt;
+</code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>REST API</h2>
+                        <p>plone.rest</p>
+                        <pre><code>  
+    &lt;plone:service
+        method="PUT"
+        for="plone.dexterity.interfaces.IDexterityContent"
+        factory=".demo.Put"
+        /&gt;
+
+</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>  
+class Put(Service):
+
+    def render(self):
+        return ISerializeToJSON(self.content)
+
+</code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>TESTING</h2>
+                        <h3><a href="http://jenkins.plone.org">jenkins.plone.org</a></h3>
+                    </section>
+                    <section>
+                        <img src="imatges/timo.jpg" height="600px"/>
+                        <p>... and the plone testing team</p>
+                        <aside class="notes">
+                            5189 Tests and 101 Robot tests
+                        </aside>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Plone 5.0 Beta 3!</h2>
+                    <h3>IS HERE!</h3>
+                    <pre><code>
+git clone git@github.com/plone/jump.into.git
+
+python2.7 bootstrap.py
+
+# You need python-dev libpng-dev libjpeg-dev build-essential 
+# libxml2-dev libxslt-dev (gcc)
+
+./bin/buildout -v
+
+# Coffee
+
+./bin/instance fg
+
+                    </code></pre>
+                </section>
+<!--                 <section>
+                    <ul>
+                        <li>17700 files</li>
+                        <li class="fragment">Javascript 1306829</li>
+                        <li class="fragment">Python 798444</li>
+                        <li class="fragment">XML 144468</li>
+                        <li class="fragment">CSS 77093</li>
+                        <li class="fragment">C 18366</li>
+                    </ul>
+                </section> -->
+                <section>
+                    <h2>Training and docs</h2>
+                    <ul>
+                        <li><a href="https://training.plone.org">training.plone.org</a></li>
+                        <li><a href="http://docs.plone.org">docs.plone.org</a></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Future (my opinion)?</h2>
+                    <ul>
+                        <li>REST API</li>
+                        <li>asyncio</li>
+                        <li>Pyramid/SustanceD</li>
+                        <li>JS frontend</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Machine Learning?</h2>
+                    <p>Content focused with sklearn</p>
+                </section>
+
+                <section>
+                    <h2>Goals</h2>
+                    <ul>
+                        <li>Related content</li>
+                        <li>Classification of current content with existing data set</li>                    
+                        <li>Recommendation of subject tags</li>
+                        <li>Semantic search on the live search</li>
+                    </ul>
+                </section>
+
+                <section data-background="imatges/scikit.png">
+                    
+                </section>
+
+
+                <section>
+                    <section>
+                        <h2>Clustering</h2>
+                        <h4><a href="http://github.com/collective/collective.machinelearning.git">github.com/collective/collective.machinelearning</a></h4>
+                    </section>
+                    <section>
+                        <h2>adapter ILearningString</h2>
+                        <pre><code>
+from zope.component import getAdapter
+from collective.machinelearning.interfaces import ILearningString
+
+getAdapter(obj, ILearningString)
+</code></pre>
+                    </section>
+                    <section>
+                        <h2>Normalize and vectorize</h2>
+                        <ul>
+                            <li>nltk.stem</li>
+                            <li>FeatureHasher</li>
+                        </ul>
+                        <p class="fragment"> And we store the corpus as a pickle </p>
+                    </section>
+                    <section>
+                        <h2>Clusterize</h2>
+                        <ul>
+                            <li>Define the number of clusters on FE</li>
+                            <li>KMeans!</li>
+                        </ul>
+                        <p class="fragment"> And we store the model as a pickle </p>
+                    </section>
+                    <section>
+                        <ul>
+                            <li>We store on the objects to which cluster it belongs</li>
+                            <li>We can predict new objects to which cluster it belongs</li>
+                            <li>Security is implicit by Plone</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Future</h2>
+                    <ul>
+                        <li>Classification (now trying Naive Bayes) on clusters (collective.gensim)</li>
+                        <li>Recommendation</li>
+                        <li>Semantic Search</li>
+                        <li>External and incremental computation</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Community</h2>
+                    <img src="imatges/community.jpg"/>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>THE END</h1>
+                    <h2>Thanks</h2>
+                    <h3>@bloodbare</h3>
+                    <h3>ramon@plone.org</h3>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                // Parallax background image
+                parallaxBackgroundImage: 'imatges/paralax.png', // e.g. "https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg"
+
+                // Parallax background size
+                parallaxBackgroundSize: '2400px 720px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+
+                // Amount of pixels to move the parallax background per slide step,
+                // a value of 0 disables movement along the given axis
+                // These are optional, if they aren't specified they'll be calculated automatically
+                parallaxBackgroundHorizontal: 200,
+                parallaxBackgroundVertical: 50,
+
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
