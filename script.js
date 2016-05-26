@@ -3,7 +3,17 @@
 jQuery(window).load(function () {
 
 
+
+	// Takes the gutter width from the bottom margin of .post
+
+	var container = jQuery('section');
+
+
+
+	// Creates an instance of Masonry on #posts
+
 	container.masonry({
+		gutter: gutter,
 		itemSelector: '.grid-item',
 		columnWidth: '.grid-item'
 	});
