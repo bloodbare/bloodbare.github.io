@@ -13,7 +13,6 @@ jQuery(window).load(function () {
 	// Creates an instance of Masonry on #posts
 
 	container.masonry({
-		gutter: gutter,
 		itemSelector: '.grid-item',
 		columnWidth: '.grid-item'
 	});
