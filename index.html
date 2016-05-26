@@ -16,8 +16,9 @@
 	<![endif]-->
 	<script src="http://code.jquery.com/jquery.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
 	<script src="script.js"></script>
+	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
 </head>
 <body>
 	
@@ -25,7 +26,7 @@
 	
 	<!-- Header -->
 	
-	<header id="header" class="container-fluid">
+	<header id="header" class="container">
 		<h1>Ramon Navarro Bosch</h1>
 		<p class="lead">
 			Computer Science Engineer, musician and <code>Python</code>, <code>Machine Learning</code> and dance lover!
@@ -35,41 +36,35 @@
 	
 	<section class="container-fluid">
 		<h2><a href="http://bloc.jardigrec.cat/">Blog</a></h2>
-		<div class="grid">
-			<div class="grid-item">
-				<img src="http://placehold.it/600x400"><br>
-				<br>
-				<strong>Title Goes Here</strong><br>
-				<small>Category</small>
-			</div>
+		<div class="grid row-flid" id="blog">
 		</div>
 	</section>
 
 	<section class="container-fluid">
 		<h2>Social networks</h2>
-		<div class="grid">
-			<div class="grid-item">
+		<div class="grid row-flid">
+			<div class="grid-item col-md-4">
 				<a href="https://www.facebook.com/ramon.n.bosch">
-					<img src="http://placehold.it/600x400"><br>
-					<br>
-					<strong>Facebook</strong><br>
-					<small>Social Network</small>
+					<img src="http://placehold.it/600x200"><br>
+					<p>
+						<strong>Facebook</strong>
+					</p>
 				</a>
 			</div>
-			<div class="grid-item">
+			<div class="grid-item col-md-4">
 				<a href="http://twitter.com/bloodbare">
-					<img src="http://placehold.it/600x400"><br>
-					<br>
-					<strong>Twitter</strong><br>
-					<small>Social Network</small>
+					<img src="http://placehold.it/600x200"><br>
+					<p>
+						<strong>Twitter</strong>
+					</p>
 				</a>
 			</div>
-			<div class="grid-item">
+			<div class="grid-item col-md-4">
 				<a href="https://es.linkedin.com/in/ramonnavarrobosch">
-					<img src="http://placehold.it/600x400"><br>
-					<br>
-					<strong>Linkedin</strong><br>
-					<small>Social Network</small>
+					<img src="http://placehold.it/600x200"><br>
+					<p>
+						<strong>Linkedin</strong>
+					</p>
 				</a>
 			</div>
 		</div>
@@ -77,12 +72,40 @@
 
 	<section class="container-fluid">
 		<h2>Projects</h2>
-		<ul>
-<li><a href="http://intranetum.com">Intranetum SL</a></li>
-<li><a href="http://iskra.cat">Iskra SCCL</a></li>
-<li><a href="http://torreta.cat">Torreta</a></li>
-<li><a href="http://plone.org">Plone</a></li>
-		</ul>
+		<div class="grid row-flid">
+			<div class="grid-item col-md-3">
+				<a href="http://intranetum.com">
+					<img src="http://placehold.it/500x200"><br>
+					<p>
+						<strong>Intranetum SL</strong>
+					</p>
+				</a>
+			</div>
+			<div class="grid-item col-md-3">
+				<a href="http://iskra.cat">
+					<img src="http://placehold.it/500x200"><br>
+					<p>
+						<strong>Iskra SCCL</strong>
+					</p>
+				</a>
+			</div>
+			<div class="grid-item col-md-3">
+				<a href="http://torreta.cat">
+					<img src="http://placehold.it/500x200"><br>
+					<p>
+						<strong>Cia Torreta</strong>
+					</p>
+				</a>
+			</div>
+			<div class="grid-item col-md-3">
+				<a href="http://plone.org">
+					<img src="http://placehold.it/500x200"><br>
+					<p>
+						<strong>Plone</strong>
+					</p>
+				</a>
+			</div>
+		</div>
 	</section>
 
 	<section class="container-fluid">
