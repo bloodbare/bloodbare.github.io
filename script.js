@@ -6,7 +6,7 @@ jQuery(window).load(function () {
 
 	// Takes the gutter width from the bottom margin of .post
 
-	var container = jQuery('section');
+	var container = jQuery('.grid');
 
 
 
